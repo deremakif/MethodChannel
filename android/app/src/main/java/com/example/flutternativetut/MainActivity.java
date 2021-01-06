@@ -26,8 +26,10 @@ public class MainActivity extends FlutterActivity {
         @Override
         public void onMethodCall(MethodCall methodCall, Result result) {
           if (methodCall.method.equals("greetings")){
-            String message ="Hi from Android!";
-            result.success(message);
+            String text = methodCall.argument("text");
+
+            String message ="Hi from Android! ";
+            result.success(message + text);
           }
          
         }

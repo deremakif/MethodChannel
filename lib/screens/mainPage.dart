@@ -54,10 +54,13 @@ class MainPageState extends State<MainPage> {
 
   Future<Null> greetings() async {
     String _message;
+    String text = "This will be a model.";
     try {
-      final String result =
-          await platformMethodChannel.invokeMethod('greetings');
-      _message = result;
+      var result =
+          await platformMethodChannel.invokeMethod('greetings', {"text": text});
+      setState(() {
+        _message = result;
+      });
       print(result);
     } on PlatformException catch (e) {
       _message = "Exception: ${e.message}.";
