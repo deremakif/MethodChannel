@@ -30,13 +30,18 @@ public class MainActivity extends FlutterActivity {
 
         new MethodChannel(getFlutterView(), CHANNEL).setMethodCallHandler(
                 new MethodCallHandler() {
+
+                    String title = methodCall.argument("title");	  
+                    int id = methodCall.argument("id");	  
+
                     @Override
                     public void onMethodCall(MethodCall methodCall, Result result) {
                         if (methodCall.method.equals("getModel")) {
-                            
+                                                                                    
+
                             NewModel model = new NewModel();
                             model.id = 1;
-                            model.title = "model is here!";
+                            model.title = "Android model is here! And passed argument: " + title;
                                                 
                             result.success(model.toString());
                         }

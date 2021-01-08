@@ -62,7 +62,8 @@ class MainPageState extends State<MainPage> {
     int m = 3;
 
     try {
-      var response = await platformMethodChannel.invokeMethod('getModel');
+      var response = await platformMethodChannel
+          .invokeMethod('getModel', {'title': 'ggg', 'id': 2});
       setState(() {
         _message = NewModel.fromJson(json.decode(response));
         print(_message.title);

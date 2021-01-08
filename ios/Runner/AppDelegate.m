@@ -9,15 +9,25 @@
     FlutterMethodChannel* nativeChannel = [FlutterMethodChannel
                                            methodChannelWithName:@"com.methodchannel/test"
                                            binaryMessenger:controller];
-  
+    
     [nativeChannel setMethodCallHandler:^(FlutterMethodCall* call, FlutterResult result) {
         
-    
         
-        if ([@"getModel"  isEqualToString:call.method]) {            
-                      
-                  NSString *sss = @"{\"id\":1,\"title\":\"tttitttleios\"}";
-         
+        
+        if ([@"getModel"  isEqualToString:call.method]) {
+            
+            NSString* title = call.arguments[@"title"];
+            
+            title = [title stringByAppendingString:@" is coming from dart!"];
+            NSString *s = @"{\"id\":1,\"title\":\"";
+            
+            s = [s stringByAppendingString:title];
+            NSLog(@"%@", s);
+            s = [s stringByAppendingString:@"\"}"];
+            NSLog(@"%@", s);
+            
+            NSString *sss = s;
+            
             result(sss);
         } else {
             result(FlutterMethodNotImplemented);
@@ -28,9 +38,9 @@
 }
 
 - (NSString *)description {
-// NSString *s1 = @"avant";
-// NSString *s2 = @"avan2t";
-   return [NSString stringWithFormat: @"{\"id\": 1,\"title\": \"titttle - ios\"}"];
+    // NSString *s1 = @"avant";
+    // NSString *s2 = @"avan2t";
+    return [NSString stringWithFormat: @"{\"id\": 1,\"title\": \"titttle - ios\"}"];
 }
 
 - (NSString *)helloFromNativeCode {
