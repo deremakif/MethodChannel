@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'dart:convert';
 
 class MainPage extends StatefulWidget {
   @override
@@ -52,23 +53,52 @@ class MainPageState extends State<MainPage> {
     );
   }
 
+  List<dynamic> phoneNumbersList = <dynamic>[];
+  NewModel response = NewModel();
+
   Future<Null> greetings() async {
-    String _message;
+    NewModel _message;
     String text = "This will be a model.";
+    int m = 3;
+
     try {
-      var result =
-          await platformMethodChannel.invokeMethod('greetings', {"text": text});
+      var response = await platformMethodChannel.invokeMethod('getModel');
       setState(() {
-        _message = result;
+        _message = NewModel.fromJson(json.decode(response));
+        print(_message.title);
       });
-      print(result);
+      print(response);
     } on PlatformException catch (e) {
-      _message = "Exception: ${e.message}.";
+      // _message = "Exception: ";
       print("e.message");
       print(e.message);
     }
     setState(() {
-      nativeMessage = _message;
+      nativeMessage = _message.title + " - ";
     });
   }
+}
+
+NewModel newModelFromJson(String str) => NewModel.fromJson(json.decode(str));
+
+String newModelToJson(NewModel data) => json.encode(data.toJson());
+
+class NewModel {
+  NewModel({
+    this.id,
+    this.title,
+  });
+
+  int id;
+  String title;
+
+  factory NewModel.fromJson(Map<String, dynamic> json) => NewModel(
+        id: json["id"] == null ? null : json["id"],
+        title: json["title"] == null ? null : json["title"],
+      );
+
+  Map<String, dynamic> toJson() => {
+        "id": id == null ? null : id,
+        "title": title == null ? null : title,
+      };
 }
