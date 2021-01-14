@@ -29,15 +29,13 @@ public class MainActivity extends FlutterActivity {
         GeneratedPluginRegistrant.registerWith(this);
 
         new MethodChannel(getFlutterView(), CHANNEL).setMethodCallHandler(
-                new MethodCallHandler() {
-
-                    String title = methodCall.argument("title");	  
-                    int id = methodCall.argument("id");	  
-
+                new MethodCallHandler() {                   
                     @Override
                     public void onMethodCall(MethodCall methodCall, Result result) {
                         if (methodCall.method.equals("getModel")) {
                                                                                     
+                            String title = methodCall.argument("title");	  
+                            int id = methodCall.argument("id");	  
 
                             NewModel model = new NewModel();
                             model.id = 1;
@@ -45,7 +43,6 @@ public class MainActivity extends FlutterActivity {
                                                 
                             result.success(model.toString());
                         }
-
                     }
                 }
         );
